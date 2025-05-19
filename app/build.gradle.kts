@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.pontoverde"
+    namespace = "com.example.balancehealth"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.pontoverde"
+        applicationId = "com.example.balancehealth"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
