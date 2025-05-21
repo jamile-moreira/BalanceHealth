@@ -11,12 +11,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.balancehealth.screens.HomeScreen
+import com.example.balancehealth.screens.AutoAvaliacaoScreen
+import com.example.balancehealth.screens.CheckinScreen
+import com.example.balancehealth.screens.LembretesScreen
+import com.example.balancehealth.screens.RecursosApoioScreen
 import com.example.balancehealth.screens.LoginScreen
-import com.example.balancehealth.screens.LojaScreen
-import com.example.balancehealth.screens.PontosColetaScreen
-import com.example.balancehealth.screens.RegistroOcorrenciaScreen
-import com.example.balancehealth.screens.ResgatePontosScreen
-
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -30,32 +29,25 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     startDestination = "login"
                 ) {
-                    composable(route = "login"){
+                    composable(route = "login") {
                         LoginScreen(navController)
                     }
-                    composable(route = "home"){
+                    composable(route = "home") {
                         HomeScreen(navController)
                     }
-                    composable(route = "ocorrencia"){
-                        RegistroOcorrenciaScreen(navController)
+                    composable(route = "checkin") {
+                        CheckinScreen(navController)
                     }
-                    composable(route = "coleta"){
-                        PontosColetaScreen(navController)
+                    composable(route = "autoavaliacao") {
+                        AutoAvaliacaoScreen(navController)
                     }
-                    composable(route = "resgate"){
-                        ResgatePontosScreen(navController)
+                    composable(route = "recursosapoio") {
+                        RecursosApoioScreen(navController)
                     }
-                    composable(route = "loja"){
-                        LojaScreen(navController)
+                    composable(route = "lembretes") {
+                        LembretesScreen(navController)
                     }
-
-                    }
-//                LoginScreen()
-//                HomeScreen()
-//                RegistroOcorrenciaScreen()
-//                PontosColetaScreen()
-//                ResgatePontosScreen()
-//                LojaScreen()
+                }
             }
         }
     }

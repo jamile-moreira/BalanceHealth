@@ -3,6 +3,7 @@ package com.example.balancehealth.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -11,7 +12,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.navigation.NavController
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LembretesScreen(navController: NavController) {
@@ -68,5 +73,24 @@ fun LembretesScreen(navController: NavController) {
         ) {
             Text("Lembrete 3", fontSize = 18.sp, fontWeight = FontWeight.Medium)
         }
+
+        Spacer(modifier = Modifier.height(24.dp))
+        // Botão para voltar para Home
+        Button(
+            onClick = { navController.navigate("home") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Text("Voltar para Home", fontSize = 16.sp, color = Color.White)
+        }
     }
 }
+
+// Preview para LembretesScreen
+//@Preview(showBackground = true)
+//@Composable
+//fun LembretesScreenPreview() {
+//    LembretesScreen(navController = object : NavController(null) {})
+//}

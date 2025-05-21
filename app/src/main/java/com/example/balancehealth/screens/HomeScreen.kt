@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -73,7 +74,7 @@ fun HomeScreen(navController: NavController) {
 
             // Botão "Vamos Começar"
             Button(
-                onClick = { /* Ação ao clicar no botão */ },
+                onClick = { navController.navigate("checkin") },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF44B7C5)
                 ),
@@ -87,6 +88,42 @@ fun HomeScreen(navController: NavController) {
                     color = Color.White
                 )
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Botões para outras telas
+            Button(
+                onClick = { navController.navigate("recursosapoio") },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF90CAF9)
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+            ) {
+                Text("Recursos de Apoio", fontSize = 16.sp, color = Color.White)
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Button(
+                onClick = { navController.navigate("lembretes") },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF90CAF9)
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+            ) {
+                Text("Lembretes", fontSize = 16.sp, color = Color.White)
+            }
         }
     }
 }
+
+// Preview para HomeScreen
+//@Preview(showBackground = true)
+//@Composable
+//fun HomeScreenPreview() {
+//    HomeScreen()
+//}

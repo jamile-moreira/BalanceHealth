@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun RecursosApoioScreen(navController: NavController) {
@@ -87,5 +89,24 @@ fun RecursosApoioScreen(navController: NavController) {
                 }
             }
         }
+
+        // Botão para voltar para Home
+        Spacer(modifier = Modifier.height(24.dp))
+        Button(
+            onClick = { navController.navigate("home") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Text("Voltar para Home", fontSize = 16.sp, color = Color.White)
+        }
     }
 }
+
+// Preview para RecursosApoioScreen
+//@Preview(showBackground = true)
+//@Composable
+//fun RecursosApoioScreenPreview() {
+//    RecursosApoioScreen(navController = object : NavController(null) {})
+//}
