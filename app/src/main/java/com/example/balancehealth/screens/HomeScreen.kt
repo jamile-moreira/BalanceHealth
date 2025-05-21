@@ -49,7 +49,7 @@ fun HomeScreen(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "---- objetivo ----",
+                    text = "Esse é um espaço seguro para você compartilhar seus sentimentos e emoções.",
                     fontSize = 18.sp,
                     color = Color.Gray
                 )

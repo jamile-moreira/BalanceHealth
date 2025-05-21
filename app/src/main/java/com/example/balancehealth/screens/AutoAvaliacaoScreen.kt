@@ -1,5 +1,6 @@
 package com.example.balancehealth.screens
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -15,10 +16,75 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
+import com.example.balancehealth.data.AutoAvaliacao
+import com.example.balancehealth.data.AppDatabase
+import kotlinx.coroutines.launch
+
+private fun calcularIndices(respostas: List<String>): AutoAvaliacao {
+    fun mapearResposta(resposta: String): Double = when(resposta) {
+        "Sempre", "Ótimo", "Muito bem" -> 5.0
+        "Frequentemente", "Bom", "Bem" -> 4.0
+        "Às vezes", "Regular", "Normal" -> 3.0
+        "Raramente", "Ruim", "Mal" -> 2.0
+        "Nunca", "Péssimo", "Muito mal" -> 1.0
+        else -> 0.0
+    }
+
+    val indiceRelacionamento = (7..13).map { mapearResposta(respostas[it]) }.average()
+    val indiceComunicacao = (14..17).map { mapearResposta(respostas[it]) }.average()
+    val indiceRelacaoLideranca = (18..22).map { mapearResposta(respostas[it]) }.average()
+
+    // Cálculo do índice de burnout (baseado em carga de trabalho e sinais de alerta)
+    val indiceBurnout = (2..6).map { 6 - mapearResposta(respostas[it]) }.average()
+
+    val classificacaoRisco = when {
+        indiceBurnout >= 4.0 -> "Alto Risco"
+        indiceBurnout >= 3.0 -> "Médio Risco"
+        else -> "Baixo Risco"
+    }
+
+    return AutoAvaliacao(
+        sexo = respostas[0],
+        sentimentoHoje = respostas[1],
+        cargaTrabalho = respostas[2],
+        impactoQualidadeVida = respostas[3],
+        horasExtras = respostas[4],
+        sintomasPsicologicos = respostas[5],
+        impactoProdutividade = respostas[6],
+        relacionamentoSetor = respostas[7],
+        relacionamentoOutrosSetores = respostas[8],
+        respeito = respostas[9],
+        relacionamentoEquipe = respostas[10],
+        liberdadeExpressao = respostas[11],
+        valorizacao = respostas[12],
+        cooperacao = respostas[13],
+        feedbacks = respostas[14],
+        comunicacaoAberta = respostas[15],
+        circulacaoInformacoes = respostas[16],
+        cienciaMetas = respostas[17],
+        interesseLideranca = respostas[18],
+        disponibilidadeLider = respostas[19],
+        confortoReportarProblemas = respostas[20],
+        reconhecimentoLider = respostas[21],
+        confiancaLider = respostas[22],
+        indiceRelacionamento = indiceRelacionamento,
+        indiceComunicacao = indiceComunicacao,
+        indiceRelacaoLideranca = indiceRelacaoLideranca,
+        indiceBurnout = indiceBurnout,
+        classificacaoRisco = classificacaoRisco
+    )
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AutoAvaliacaoScreen(navController: NavController) {
+fun AutoAvaliacaoScreen(
+    navController: NavController,
+    context: Context = LocalContext.current
+) {
+    val scope = rememberCoroutineScope()
+    val database = remember { AppDatabase.getDatabase(context) }
+
     val perguntas = listOf(
         // Mapeamento de Risco
         Pair("Escolha o seu sexo (a) ou legal", listOf("Feminino", "Masculino", "Outro")),
@@ -95,7 +161,13 @@ fun AutoAvaliacaoScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = { showDialog = true },
+            onClick = {
+                scope.launch {
+                    val autoAvaliacao = calcularIndices(respostas)
+                    database.autoAvaliacaoDao().inserir(autoAvaliacao)
+                    showDialog = true
+                }
+            },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(8.dp)
         ) {

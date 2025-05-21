@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.balancehealth.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
@@ -76,7 +77,7 @@ fun LoginScreen(navController: NavController) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                Text(text = "Não tem cadastro?", color = Color(0xFF717A46), fontSize = 18.sp)
+                Text(text = "Não tem cadastro?", color = Color(0xFF781193), fontSize = 18.sp)
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -91,9 +92,9 @@ fun LoginScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp)
-                    .padding(bottom = 30.dp),
+                    .padding(bottom = 10.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF717A46)
+                    containerColor = Color(0xFF97589F)
                 ),
             ) {
                 Text("Login", fontSize = 23.sp)
